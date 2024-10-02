@@ -4,7 +4,6 @@ phases:
   install:
     commands:
       - echo "Installing AWS CLI !!!..."
-      - pip install awscli
 
   pre_build:
     commands:
