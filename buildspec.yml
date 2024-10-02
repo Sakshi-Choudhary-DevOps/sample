@@ -3,20 +3,33 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Nothing to install in this simple build."
+      - echo "Installing AWS CLI !!!..."
+      - pip install awscli
 
   pre_build:
     commands:
-      - echo "Preparing for build."
+      - echo "Creating User and Group!!!"
 
   build:
     commands:
-      - echo "Building project... (In this case, no build is needed for static HTML)."
+      - echo "Creating a new IAM User..."
+      - aws iam create-user --user-name Sakshi
+
+      - echo "Creating a new IAM Group..."
+      - aws iam create-group --group-name devops
+
+      - echo "Assign full access to s3 bucket..."
+      - aws iam attach-group-policy --group-name devops --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+      - echo "Creating a new s3 bucket..."
+      - aws s3api create-bucket --bucket 02oct-awsdevops --region us-east-1
 
   post_build:
     commands:
-      - echo "Build completed!"
+      - echo "Deleting the IAM User..."
+      - aws iam delete-user --user-name Sakshi
+      - echo "User deleted successfully..._."
 
 artifacts:
   files:
-    - "**/*" # Specify the file you want to store as an artifact
+    - "**/*" # Include any output files if necessary
