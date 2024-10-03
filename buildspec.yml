@@ -19,8 +19,9 @@ phases:
 
       - echo "Assign full access to s3 bucket..."
       - aws iam attach-group-policy --group-name devops --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+      
       - echo "Creating a new s3 bucket..."
-      - aws s3api create-bucket --bucket 02oct-awsdevops --region ap-south-1
+      - aws s3api create-bucket --bucket 02oct-awsdevops --region us-east-1
 
   post_build:
     commands:
